@@ -1,0 +1,40 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+</ngx-spinner>
+
+<div class="container">
+
+  <h1 class="text-center mt-5">Login</h1>
+  <form class="mt-5" [formGroup]="form">
+
+    <div class="alert alert-danger" role="alert" *ngIf="hasError && errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <div class="form-group">
+      <input type="email" class="form-control" placeholder="E-Mail" formControlName="email">
+
+      <div class="text-danger mt-1" *ngIf="form.get('email').touched && !form.get('email').value">
+        * This field is required.
+      </div>
+
+      <div class="text-danger mt-1" *ngIf="form.get('email').value && !form.get('email').valid">
+        * Invalid email format.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password" formControlName="password">
+      <div class="text-danger mt-1" *ngIf="form.get('password').touched && !form.get('password').value">
+        * This field is required.
+      </div>
+
+      <div class="text-danger mt-1" *ngIf="form.get('password').value && !form.get('password').valid">
+        * Password must be at least 6 characters
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-dark btn-lg btn-block" (click)="onLogin()">Login</button>
+
+    <a routerLink="/auth/register" class="text-center mt-3 d-block">Register ?</a>
+  </form>
+</div>

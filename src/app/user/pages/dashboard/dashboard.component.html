@@ -1,0 +1,53 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
+
+<ngx-spinner name="export" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true"><p
+  style="color: white"> Exporting... </p>
+</ngx-spinner>
+
+<app-header></app-header>
+
+<div class="container-fluid mt-3 bg-dark fill">
+  <div class="row">
+    <div class="col-12 col-lg-6 p-1">
+      <div class="card bg-dark" *ngIf="!isLoading">
+        <div class="form-group p-3">
+          <div class="input-group">
+            <input type="text" class="form-control bg-dark text-light border-dark"
+                   placeholder="Search by username, password or Website URL" [(ngModel)]="filter_text"
+                   (ngModelChange)="onFilter($event)">
+            <span class="input-group-btn">
+                <button class="btn btn-dark text-light bg-dark border-0" type="button" routerLink="add-credentials">
+                  <i class="fas fa-plus add-button"></i>
+                </button>
+            </span>
+          </div>
+          <button class="btn btn-dark text-light mt-3" (click)="exportToExcel()">
+            Export to excel
+          </button>
+        </div>
+
+        <virtual-scroller class="ml-3 mr-3 mb-3 text-light" #scroll [items]="credentialList"
+                          *ngIf="credentialList.length > 0">
+          <li class="list-group-item bg-dark border-dark" *ngFor="let credential of scroll.viewPortItems"
+              [routerLink]="['edit-credentials', credential.id]" routerLinkActive="active">
+            <p class="mb-0 title">{{ credential.title }}</p>
+            <p class="mb-0 username">{{ credential.username }}</p>
+            <a [href]="credential.url" target="_blank" *ngIf="credential.url">{{ credential.url }}</a>
+          </li>
+        </virtual-scroller>
+
+        <div class="text-light text-center mb-3" *ngIf="credentialList.length == 0">
+          No credentials found, please add!
+        </div>
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 bg-dark">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+
